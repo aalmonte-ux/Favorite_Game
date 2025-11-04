@@ -8,10 +8,11 @@
 <!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 
-<style>
-/* Global Reset */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+<!-- Optional: Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
 body {
   font-family: 'Orbitron', sans-serif;
   background-image: url("https://wallpapercave.com/wp/wp9382627.jpg");
@@ -22,96 +23,51 @@ body {
   min-height: 100vh;
   position: relative;
 }
-
-/* Overlay */
 #overlay {
-  position: absolute;
-  top: 0; left: 0;
+  position: absolute; top: 0; left: 0;
   width: 100%; height: 100%;
   background: rgba(0,0,0,0.6);
   transition: background 1s ease;
   z-index: 1;
 }
-
-/* Navbar */
 .navbar {
-  position: fixed;
-  top: 10px; left: 50%;
-  transform: translateX(-50%);
+  position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
   z-index: 1000;
-  display: flex;
-  gap: 20px;
-  background: rgba(0,0,0,0.5);
-  padding: 10px 20px;
-  border-radius: 10px;
-  flex-wrap: wrap;
+  display: flex; gap: 20px;
+  background: rgba(0,0,0,0.5); padding: 10px 20px;
+  border-radius: 10px; flex-wrap: wrap;
 }
 .navbar button {
-  background: none;
-  border: none;
-  color: #00eaff;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: color 0.3s, transform 0.2s;
+  background: none; border: none; color: #00eaff;
+  font-size: 1rem; cursor: pointer; transition: color 0.3s, transform 0.2s;
 }
 .navbar button:hover { color: #fff; transform: scale(1.1); }
-.navbar button.active {
-  color: #fff;
-  font-weight: bold;
-  border-bottom: 2px solid #00eaff;
-}
+.navbar button.active { color: #fff; font-weight: bold; border-bottom: 2px solid #00eaff; }
 
-/* Page container */
 .page {
-  position: relative;
-  z-index: 2;
-  max-width: 1000px;
-  margin: 100px auto 50px auto;
-  padding: 20px;
-  opacity: 1;
-  transition: opacity 0.5s ease;
-  text-align: center;
+  position: relative; z-index: 2; max-width: 1000px;
+  margin: 100px auto 50px auto; padding: 20px;
+  opacity: 1; transition: opacity 0.5s ease; text-align: center;
 }
-
-/* Hidden state */
 .hidden { opacity: 0; pointer-events: none; }
-
-/* Headings */
 h1 { font-size: 3rem; color: #00eaff; text-shadow: 0 0 15px #00eaff; margin-bottom: 20px; }
-
-/* Paragraphs */
 p { font-size: 1.2rem; line-height: 1.6; color: #d6eaff; margin-bottom: 20px; }
 
-/* Image grids */
 .img-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-bottom: 20px; }
 .culture, .Guild, .Alliance, .character, .feature {
-  width: 200px;
-  border-radius: 15px;
-  transition: transform 0.3s, box-shadow 0.3s;
-  cursor: pointer;
+  width: 200px; border-radius: 15px; transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;
 }
 .culture { height: 250px; }
 .Eculture { height: 250px; width: 150px; border-radius: 15px; transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; }
+.character:hover, .feature:hover, .Alliance:hover, .Guild:hover, .Eculture:hover { transform: scale(1.1); box-shadow: 0 0 20px #00eaff; }
 
-.character:hover, .feature:hover, .Alliance:hover, .Guild:hover, .Eculture:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 20px #00eaff;
-}
-
-/* Next button */
 #nextButton {
-  padding: 12px 25px;
-  font-size: 1.1rem;
-  background-color: #00eaff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  color: #000;
+  padding: 12px 25px; font-size: 1.1rem; background-color: #00eaff;
+  border: none; border-radius: 8px; cursor: pointer; color: #000;
   transition: transform 0.2s, background-color 0.2s;
 }
 #nextButton:hover { transform: scale(1.1); background-color: #00ccff; }
 
-/* Responsive */
 @media(max-width: 768px) {
   h1 { font-size: 2.2rem; }
   .character, .feature, .Alliance, .Guild { width: 150px; }
@@ -146,142 +102,126 @@ p { font-size: 1.2rem; line-height: 1.6; color: #d6eaff; margin-bottom: 20px; }
 let currentPage = 0;
 
 const pages = [
-  {
-    title: "Welcome to My Favorite Game",
-    content: `<p>Press SPACE or click "Next" to explore my favorite characters, generals, features, and more!</p>`
-  },
-  {
-    title: "My Favorite Features",
-    content: `
-      <div class="img-grid">
-        <div>
-          <img class="culture" src="https://i0.wp.com/onechilledgamer.com/wp-content/uploads/2022/03/evony-change-culture.jpg?w=720&ssl=1" alt="Civilizations">
-          <p><strong>Seven Unique Civilizations:</strong> Each civilization offers a unique society and culture, allowing players to experience different historical settings and strategies.</p>
-        </div>
-        <div>
-          <img class="feature" src="https://tse1.mm.bing.net/th/id/OIP._yw0Kde-LmUuD2NPvuv6IwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Gameplay Modes">
-          <p><strong>Diverse Gameplay Modes:</strong> The game includes PvP battles, PvE campaigns, and monster hunting, providing a diverse gameplay experience.</p>
-        </div>
-        <div>
-          <img class="feature" src="https://tse3.mm.bing.net/th/id/OIP.Ivxhr3VhjiBbWXxhQAz3JwAAAA?rs=1&pid=ImgDetMain&o=7&rm=3" alt="City-Building">
-          <p><strong>City-Building and Resource Management:</strong> Players can build and manage their medieval kingdoms, gather resources, train troops, and research technologies.</p>
-        </div>
-        <div>
-          <img class="feature" src="https://www.h5gamestreet.com/games/images/20200618/99b7158a480261388a0bf710bdc32257.jpg" alt="Dynamic Strategies">
-          <p><strong>Dynamic Strategies:</strong> The game challenges players to balance growth, defense, and expansion to achieve dominance.</p>
-        </div>
+  { title: "Welcome to My Favorite Game", content: `<p>Press SPACE or click "Next" to explore my favorite characters, generals, features, and more!</p>` },
+
+  { title: "My Favorite Features", content: `
+    <div class="img-grid">
+      <div>
+        <img class="culture" src="https://i0.wp.com/onechilledgamer.com/wp-content/uploads/2022/03/evony-change-culture.jpg?w=720&ssl=1" alt="Civilizations">
+        <p><strong>Seven Unique Civilizations:</strong> Each civilization offers a unique society and culture, allowing players to experience different historical settings and strategies.</p>
       </div>
-      <p>These features make <strong>Evony: The King's Return</strong> a compelling choice for strategy game enthusiasts, offering a blend of city-building, military strategy, and diplomacy that keeps players engaged and challenged.</p>
-    `
-  },
-  {
-    title: "My Favorite Cultures",
-    content: `
-      <div class="img-grid">
-        <div>
-          <img class="Eculture" src="https://tse3.mm.bing.net/th/id/OIP.peeqSBtK7tEKDkMfnEbM3QHaNY?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Europe Culture">
-          <p><strong>Europe</strong> – Great for early to mid game to help with boss rallies and for upgrading expensive buildings in late game.</p>
-        </div>
-        <div>
-          <img class="Eculture" src="https://evonybuilds.com/wp-content/uploads/2022/05/china-culture.jpeg" alt="China Culture">
-          <p><strong>China</strong> – Good for resource production and for training a large batch of troops.</p>
-        </div>
+      <div>
+        <img class="feature" src="https://tse1.mm.bing.net/th/id/OIP._yw0Kde-LmUuD2NPvuv6IwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Gameplay Modes">
+        <p><strong>Diverse Gameplay Modes:</strong> The game includes PvP battles, PvE campaigns, and monster hunting, providing a diverse gameplay experience.</p>
       </div>
-    `
-  },
-  {
-    title: "My Favorite Generals",
-    content: `
-      <div class="img-grid">
-        <div>
-          <img class="character" src="https://i0.wp.com/onechilledgamer.com/wp-content/uploads/2022/02/elise.jpg?w=299&ssl=1" alt="Elise">
-          <p>Elise: Top-tier cavalry general.</p>
-        </div>
-        <div>
-          <img class="character" src="https://cdn-bgp.bluestacks.com/blog-images/com.topgamesinc.evony/EV_GTL_ENG_3_2025-02-06_17:39:09.webp" alt="Scipio Africanus">
-          <p>Scipio Africanus: Ground troop powerhouse.</p>
-        </div>
-        <div>
-          <img class="character" src="https://cdn-bgp.bluestacks.com/blog-images/com.topgamesinc.evony/EV_GTL_ENG_4_2025-02-06_17:39:09.jpg" alt="Li Shimin">
-          <p>Li Shimin: Boosts cavalry damage & march speed.</p>
-        </div>
+      <div>
+        <img class="feature" src="https://tse3.mm.bing.net/th/id/OIP.Ivxhr3VhjiBbWXxhQAz3JwAAAA?rs=1&pid=ImgDetMain&o=7&rm=3" alt="City-Building">
+        <p><strong>City-Building and Resource Management:</strong> Players can build and manage their medieval kingdoms, gather resources, train troops, and research technologies.</p>
       </div>
-    `
-  },
-  {
-    title: "Alliances & Guilds",
-    content: `
-      <div class="img-grid">
-        <div>
-          <img class="Alliance" src="https://i0.wp.com/www.levelwinner.com/wp-content/uploads/2021/11/evony-alliance-500x889-1.jpg?fit=500%2C889&ssl=1" alt="Alliancepic">
-        </div>
-        <div>
-          <img class="Guild" src="https://store-images.s-microsoft.com/image/apps.47641.14556964592515553.6f5a6bc8-333c-4f5e-b9f4-95f2fec054b7.1ac60baf-6b95-4507-b9cd-2f44387dbb5d?mode=scale&q=90&h=1080&w=1920" alt="guildpic">
-          <p>In <em>Evony: The King’s Return</em>, players can join an existing alliance or create their own. Alliances let players team up globally, offering faster building, resource help, coordinated attacks, and defense support. Creating your own alliance lets you recruit members, set rules, and lead strategies in wars and expansion. Players can also chat in real time, trade, and participate in cooperative battles, making the game highly interactive and community-driven.</p>
-        </div>
+      <div>
+        <img class="feature" src="https://www.h5gamestreet.com/games/images/20200618/99b7158a480261388a0bf710bdc32257.jpg" alt="Dynamic Strategies">
+        <p><strong>Dynamic Strategies:</strong> The game challenges players to balance growth, defense, and expansion to achieve dominance.</p>
       </div>
-    `
-  },
-  {
-    title: "Graphics & UI",
-    content: `
-      <div class="img-grid">
-        <div>
-          <img class="feature" src="https://tse2.mm.bing.net/th/id/OIP.l_KL_b4IAHu6RUJkaEzHiwHaEK?rs=1&pid=ImgDetMain&o=7&rm=3">
-          <p><strong>Immersive City Design:</strong> Evony offers stunning city visuals filled with detailed architecture, moving troops, and vibrant environments that reflect your chosen civilization.</p>
-        </div>
-        <div>
-          <img class="feature" src="https://info.topgamesinc.com/wp-content/uploads/2024/11/Evony-Season-14-All-Star.jpg" alt="Battle Interface">
-          <p><strong>Dynamic Battle Interface:</strong> Real-time combat visuals show troops clashing on diverse terrains, with clear animations and tactical effects for an exciting experience.</p>
-        </div>
-        <div>
-          <img class="feature" src="https://i.pinimg.com/originals/9c/b7/77/9cb777d534bb58517924ad465cb9e58f.png" alt="User Interface">
-          <p><strong>User-Friendly Interface:</strong> The menu layout is clean and intuitive, allowing players to manage armies, buildings, and alliances easily without cluttered screens.</p>
-        </div>
+    </div>
+    <p>These features make <strong>Evony: The King's Return</strong> a compelling choice for strategy game enthusiasts, offering a blend of city-building, military strategy, and diplomacy that keeps players engaged and challenged.</p>
+  `},
+
+  { title: "My Favorite Cultures", content: `
+    <div class="img-grid">
+      <div>
+        <img class="Eculture" src="https://tse3.mm.bing.net/th/id/OIP.peeqSBtK7tEKDkMfnEbM3QHaNY?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Europe Culture">
+        <p><strong>Europe</strong> – Great for early to mid game to help with boss rallies and for upgrading expensive buildings in late game.</p>
       </div>
-      <p>The graphics and interface in <strong>Evony: The King’s Return</strong> enhance the overall strategy experience by combining visual realism with smooth, responsive controls—keeping every battle and city-building moment engaging.</p>
-    `
-  },
-  {
-    title: "Start Your Adventure & Download",
-    content: `
-      <p>Now you know my favorites! Are you ready to play the game?</p>
-      <p>You can download <strong>Evony: The King’s Return</strong> for free on:</p>
-      <div class="img-grid">
-        <div>
-          <img class="feature" src="https://images.igdb.com/igdb/image/upload/t_1080p_2x/co68aq.jpg" alt="Download Evony">
-          <p><a href="https://play.google.com/store/apps/details?id=com.topgamesinc.evony&hl=en-US" target="_blank" style="color:#00eaff; text-decoration:underline;">Google Play Store</a></p>
-        </div>
-        <div>
-          <img class="feature" src="https://i.ytimg.com/vi/MU5oC54HiDw/maxresdefault.jpg" alt="Evony PC">
-          <p><a href="https://pc.evony.com/" target="_blank" style="color:#00eaff; text-decoration:underline;">Play on PC</a></p>
-        </div>
+      <div>
+        <img class="Eculture" src="https://evonybuilds.com/wp-content/uploads/2022/05/china-culture.jpeg" alt="China Culture">
+        <p><strong>China</strong> – Good for resource production and for training a large batch of troops.</p>
       </div>
-    `
-  }
+    </div>
+  `},
+
+  { title: "My Favorite Generals", content: `
+    <div class="img-grid">
+      <div>
+        <img class="character" src="https://i0.wp.com/onechilledgamer.com/wp-content/uploads/2022/02/elise.jpg?w=299&ssl=1" alt="Elise">
+        <p>Elise: Top-tier cavalry general.</p>
+      </div>
+      <div>
+        <img class="character" src="https://cdn-bgp.bluestacks.com/blog-images/com.topgamesinc.evony/EV_GTL_ENG_3_2025-02-06_17:39:09.webp" alt="Scipio Africanus">
+        <p>Scipio Africanus: Ground troop powerhouse.</p>
+      </div>
+      <div>
+        <img class="character" src="https://cdn-bgp.bluestacks.com/blog-images/com.topgamesinc.evony/EV_GTL_ENG_4_2025-02-06_17:39:09.jpg" alt="Li Shimin">
+        <p>Li Shimin: Boosts cavalry damage & march speed.</p>
+      </div>
+    </div>
+  `},
+
+  { title: "Alliances & Guilds", content: `
+    <div class="img-grid">
+      <div>
+        <img class="Alliance" src="https://i0.wp.com/www.levelwinner.com/wp-content/uploads/2021/11/evony-alliance-500x889-1.jpg?fit=500%2C889&ssl=1" alt="Alliancepic">
+      </div>
+      <div>
+        <img class="Guild" src="https://store-images.s-microsoft.com/image/apps.47641.14556964592515553.6f5a6bc8-333c-4f5e-b9f4-95f2fec054b7.1ac60baf-6b95-4507-b9cd-2f44387dbb5d?mode=scale&q=90&h=1080&w=1920" alt="guildpic">
+        <p>
+          In <em>Evony: The King’s Return</em>, players can join an existing alliance or create their own. Alliances let players team up globally, offering faster building, resource help, coordinated attacks, and defense support. Creating your own alliance lets you recruit members, set rules, and lead strategies in wars and expansion. Players can also chat in real time, trade, and participate in cooperative battles, making the game highly interactive and community-driven.
+        </p>
+      </div>
+    </div>
+  `},
+
+  { title: "Graphics & UI", content: `
+    <div class="img-grid">
+      <div>
+        <img class="feature" src="https://tse2.mm.bing.net/th/id/OIP.l_KL_b4IAHu6RUJkaEzHiwHaEK?rs=1&pid=ImgDetMain&o=7&rm=3" alt="City Design">
+        <p><strong>Immersive City Design:</strong> Evony offers stunning city visuals filled with detailed architecture, moving troops, and vibrant environments that reflect your chosen civilization.</p>
+      </div>
+      <div>
+        <img class="feature" src="https://info.topgamesinc.com/wp-content/uploads/2024/11/Evony-Season-14-All-Star.jpg" alt="Battle Interface">
+        <p><strong>Dynamic Battle Interface:</strong> Real-time combat visuals show troops clashing on diverse terrains, with clear animations and tactical effects for an exciting experience.</p>
+      </div>
+      <div>
+        <img class="feature" src="https://i.pinimg.com/originals/9c/b7/77/9cb777d534bb58517924ad465cb9e58f.png" alt="User Interface">
+        <p><strong>User-Friendly Interface:</strong> The menu layout is clean and intuitive, allowing players to manage armies, buildings, and alliances easily without cluttered screens.</p>
+      </div>
+    </div>
+    <p>The graphics and interface in <strong>Evony: The King’s Return</strong> enhance the overall strategy experience by combining visual realism with smooth, responsive controls—keeping every battle and city-building moment engaging.</p>
+  `},
+
+  { title: "Start Your Adventure & Download", content: `
+    <p>Now you know my favorites! Are you ready to play the game?</p>
+    <p>You can download <strong>Evony: The King’s Return</strong> for free on:</p>
+    <div class="img-grid">
+      <div>
+        <img class="feature" src="https://images.igdb.com/igdb/image/upload/t_1080p_2x/co68aq.jpg" alt="Download Evony">
+        <p><a href="https://play.google.com/store/apps/details?id=com.topgamesinc.evony&hl=en-US" target="_blank" style="color:#00eaff; text-decoration:underline;">Google Play Store</a></p>
+      </div>
+      <div>
+        <img class="feature" src="https://i.ytimg.com/vi/MU5oC54HiDw/maxresdefault.jpg" alt="Evony PC">
+        <p><a href="https://pc.evony.com/" target="_blank" style="color:#00eaff; text-decoration:underline;">Play on PC</a></p>
+      </div>
+    </div>
+  `}
 ];
 
-// DOM Elements
-const pageEl = document.getElementById("page");
+const page = document.getElementById("page");
 const navbarButtons = document.querySelectorAll(".navbar button");
 
-// Show page function
 function showPage(index) {
-  pageEl.classList.add("hidden");
+  page.classList.add("hidden");
   navbarButtons.forEach(btn => btn.classList.remove("active"));
   navbarButtons[index].classList.add("active");
 
   setTimeout(() => {
-    pageEl.innerHTML = `<h1>${pages[index].title}</h1>${pages[index].content}` +
+    page.innerHTML = `<h1>${pages[index].title}</h1>${pages[index].content}` +
       (index < pages.length - 1 ? `<button id="nextButton">Next</button>` : "");
-    pageEl.classList.remove("hidden");
+    page.classList.remove("hidden");
 
     const nextBtn = document.getElementById("nextButton");
     if (nextBtn) nextBtn.addEventListener("click", nextPage);
   }, 300);
 }
 
-// Next page function
 function nextPage() {
   if (currentPage < pages.length - 1) {
     currentPage++;
@@ -299,14 +239,12 @@ navbarButtons.forEach(btn => {
 
 // Spacebar navigation
 document.addEventListener("keydown", e => {
-  if (e.code === "Space") {
-    e.preventDefault();
-    nextPage();
-  }
+  if (e.code === "Space") { e.preventDefault(); nextPage(); }
 });
 
-// Initialize
+// Initialize first page
 showPage(currentPage);
 </script>
+
 </body>
 </html>
